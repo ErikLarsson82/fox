@@ -108,8 +108,8 @@ function init() {
 }
 
 function gameloop() {
-    let found = fsm.state === 'found'
-    let game = fsm.state === 'game'
+    var found = fsm.state === 'found'
+    var game = fsm.state === 'game'
 
     animations.forEach(function(x) { x() })
 
