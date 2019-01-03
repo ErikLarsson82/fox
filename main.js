@@ -29,14 +29,14 @@ function game() {
     function resize() {
         console.log('resize to width', window.innerWidth)
 
-        /* //PC
+        //PC
         var zoomScaleWidth = (window.innerWidth - (window.innerWidth % gameWidth)) / gameWidth
         var zoomScaleHeight = (window.innerHeight - (window.innerHeight % gameHeight)) / gameHeight
         var zoomScale = Math.min(zoomScaleWidth, zoomScaleHeight)
         renderer.view.style.width = gameWidth * zoomScale + 'px'
         renderer.view.style.height = gameHeight * zoomScale + 'px'
-        */
-
+        
+        /*
         // Cocoon IO
         var scale = Math.min(window.innerHeight/gameHeight, window.innerWidth/gameWidth);
 
@@ -44,6 +44,7 @@ function game() {
         renderer.view.style.height = gameHeight * scale
         renderer.view.style.left = (window.innerWidth * 0.5 - gameWidth * scale * 0.5)
         renderer.view.style.top = (window.innerHeight * 0.5 - gameHeight * scale * 0.5)
+        */
     }
     window.addEventListener("resize", resize)
 
