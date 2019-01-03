@@ -94,6 +94,7 @@ function init() {
     renderer.resize(gameWidth, gameHeight)
     renderer.backgroundColor = 0x4b692f
     PIXI.loader.add('fox.png')
+    PIXI.loader.add('fox2.png')
     PIXI.loader.add('bear.png')
     PIXI.loader.add('bear_sleeping.png')
     PIXI.loader.add('bear_angry.png')
