@@ -39,7 +39,7 @@ function addFSM() {
           },
           onStart: startGame,
           onGameover: function() {
-            gameover_logo = new PIXI.Sprite(PIXI.Texture.fromImage("gameover_logo.png"))
+            gameover_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/gameover_logo.png"))
             stage.addChild(gameover_logo)
           },
           onLeaveGameover: function() {
@@ -47,7 +47,7 @@ function addFSM() {
           },
           onLeaveGameover: removePixiChildren,
           onFinish: function() {
-            victory_logo = new PIXI.Sprite(PIXI.Texture.fromImage("victory_logo.png"))
+            victory_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/victory_logo.png"))
             stage.addChild(victory_logo)
           },
           onLeaveVictory: function() {
@@ -93,17 +93,17 @@ function init() {
 
     renderer.resize(gameWidth, gameHeight)
     renderer.backgroundColor = 0x4b692f
-    PIXI.loader.add('fox.png')
-    PIXI.loader.add('fox2.png')
-    PIXI.loader.add('bear.png')
-    PIXI.loader.add('bear_sleeping.png')
-    PIXI.loader.add('bear_angry.png')
-    PIXI.loader.add('bush.png')
-    PIXI.loader.add('bush2.png')
-    PIXI.loader.add('stub.png')
-    PIXI.loader.add('logo.png')
-    PIXI.loader.add('gameover_logo.png')
-    PIXI.loader.add('victory_logo.png')
+    PIXI.loader.add('images/fox.png')
+    PIXI.loader.add('images/fox2.png')
+    PIXI.loader.add('images/bear.png')
+    PIXI.loader.add('images/bear_sleeping.png')
+    PIXI.loader.add('images/bear_angry.png')
+    PIXI.loader.add('images/bush.png')
+    PIXI.loader.add('images/bush2.png')
+    PIXI.loader.add('images/stub.png')
+    PIXI.loader.add('images/logo.png')
+    PIXI.loader.add('images/gameover_logo.png')
+    PIXI.loader.add('images/victory_logo.png')
     PIXI.loader.load(addFSM)
 }
 
@@ -158,8 +158,8 @@ function gameloop() {
         }
         if (bear.awake && running && bushIndex > 0 && game && fox.position.x < gameWidth) {
             animations.push(animation(bear, [
-                { texture: PIXI.Texture.fromImage("bear.png"), time: 10 },
-                { texture: PIXI.Texture.fromImage("bear_angry.png"), time: 10 },
+                { texture: PIXI.Texture.fromImage("images/bear.png"), time: 10 },
+                { texture: PIXI.Texture.fromImage("images/bear_angry.png"), time: 10 },
             ]))
             fsm.discover()
         }
@@ -169,7 +169,7 @@ function gameloop() {
 
 
 function splash() {
-    logo = new PIXI.Sprite(PIXI.Texture.fromImage("logo.png"))
+    logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/logo.png"))
     stage.addChild(logo)
     renderer.render(stage)   
 }
@@ -180,28 +180,28 @@ function startGame() {
     bushIndex = -1
     cooldown = 20
 
-    fox = new PIXI.Sprite(PIXI.Texture.fromImage("fox.png"))
+    fox = new PIXI.Sprite(PIXI.Texture.fromImage("images/fox.png"))
     fox.position.x = 10
     fox.position.y = 10
     stage.addChild(fox)
 
-    const bush2 = new PIXI.Sprite(PIXI.Texture.fromImage("bush2.png"))
+    const bush2 = new PIXI.Sprite(PIXI.Texture.fromImage("images/bush2.png"))
     bush2.position.x = 100
     bush2.position.y = 140
     stage.addChild(bush2)
 
-    const bush3 = new PIXI.Sprite(PIXI.Texture.fromImage("bush2.png"))
+    const bush3 = new PIXI.Sprite(PIXI.Texture.fromImage("images/bush2.png"))
     bush3.position.x = 200
     bush3.position.y = 170
     stage.addChild(bush3)
 
-    const stub = new PIXI.Sprite(PIXI.Texture.fromImage("stub.png"))
+    const stub = new PIXI.Sprite(PIXI.Texture.fromImage("images/stub.png"))
     stub.position.x = 20
     stub.position.y = 120
     stage.addChild(stub)
 
     bears = bearPos.map(function(pos) {
-        const bear = new PIXI.Sprite(PIXI.Texture.fromImage("bear.png"))
+        const bear = new PIXI.Sprite(PIXI.Texture.fromImage("images/bear.png"))
         bear.position.x = pos.x
         bear.position.y = pos.y
         bear.INTERVAL = 180
@@ -216,7 +216,7 @@ function startGame() {
         bushContainer.position.x = pos.x
         bushContainer.position.y = pos.y
         stage.addChild(bushContainer)
-        const bush = new PIXI.Sprite(PIXI.Texture.fromImage("bush.png"))
+        const bush = new PIXI.Sprite(PIXI.Texture.fromImage("images/bush.png"))
         bush.position.x = -3
         bush.position.y = -3
         bushContainer.addChild(bush)
@@ -302,8 +302,8 @@ function run() {
 
 function runFox() {
     animations.push(animation(fox, [
-        { texture: PIXI.Texture.fromImage("fox.png"), time: 5 },
-        { texture: PIXI.Texture.fromImage("fox2.png"), time: 5 }
+        { texture: PIXI.Texture.fromImage("images/fox.png"), time: 5 },
+        { texture: PIXI.Texture.fromImage("images/fox2.png"), time: 5 }
     ]))
 }
 
