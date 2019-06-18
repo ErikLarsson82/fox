@@ -7,9 +7,6 @@
     "javascript-state-machine": "^3.1.0",
     "pixi.js": "^4.8.4"
   },
-  "devDependencies": {
-    "webpack": "^4.28.3"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

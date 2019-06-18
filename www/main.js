@@ -86,12 +86,12 @@ function init() {
 
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST // Default pixel-scaling
 
-    window.addEventListener("resize", resize)
+    //window.addEventListener("resize", resize)
 
     resize()
     keyboard()
 
-    renderer.resize(gameWidth, gameHeight)
+    //renderer.resize(gameWidth, gameHeight)
     renderer.backgroundColor = 0x4b692f
     PIXI.loader.add('images/fox.png')
     PIXI.loader.add('images/fox2.png')
@@ -154,7 +154,7 @@ function gameloop() {
         if (game && bear.timer < 0) {
             bear.awake = !bear.awake
             bear.timer = bear.INTERVAL
-            bear.texture = PIXI.Texture.fromImage(bear.awake ? "bear.png" : "bear_sleeping.png")
+            bear.texture = PIXI.Texture.fromImage(bear.awake ? "images/bear.png" : "images/bear_sleeping.png")
         }
         if (bear.awake && running && bushIndex > 0 && game && fox.position.x < gameWidth) {
             animations.push(animation(bear, [
@@ -273,14 +273,19 @@ function keyboard() {
 }
 
 function resize() {
-    console.log('resize to width', window.innerWidth)
+
+    window.screen.orientation.lock('landscape')
 
     //PC
-    var zoomScaleWidth = (window.innerWidth - (window.innerWidth % gameWidth)) / gameWidth
-    var zoomScaleHeight = (window.innerHeight - (window.innerHeight % gameHeight)) / gameHeight
-    var zoomScale = Math.min(zoomScaleWidth, zoomScaleHeight)
+    //var zoomScaleWidth = (window.innerWidth - (window.innerWidth % gameWidth)) / gameWidth
+    //var zoomScaleHeight = (window.innerHeight - (window.innerHeight % gameHeight)) / gameHeight
+    //var zoomScale = Math.min(zoomScaleWidth, zoomScaleHeight)
+    var zoomScale = 1.5
     renderer.view.style.width = gameWidth * zoomScale + 'px'
     renderer.view.style.height = gameHeight * zoomScale + 'px'
+    renderer.resize(gameWidth, gameHeight)
+
+    //console.log('resize to width', window, window.innerWidth, zoomScaleWidth, zoomScale)
     
     /*
     // Cocoon IO
