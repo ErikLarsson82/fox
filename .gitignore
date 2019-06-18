@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 node_modules/
 build/
+=======
+
+node_modules
+plugins
+platforms
+>>>>>>> bc3a409a60550fa7744a9a2704db749ab1c44ad4
