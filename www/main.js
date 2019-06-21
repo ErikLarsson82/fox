@@ -2,6 +2,29 @@ var rendererHeight, gameWidth, gameHeight, stage, renderer, fsm, loop
 
 var cooldown, fox, bear, logo, gameover_logo, victory_logo, running, bushIndex, bushes, bears, animations
 
+var sfx = {}
+var music = {}
+
+var sfxFiles = ['bush', 'found', 'snooze', 'success']
+var musicFiles = ['intro', 'sneak']
+
+document.addEventListener("deviceready", onDeviceReady, false)
+
+function onDeviceReady() {
+    sfxFiles.forEach(x => {
+      sfx[x] = new Media(`sfx/${x}.wav`, console.log, console.log, console.log)  
+    })
+
+    musicFiles.forEach(x => {
+      music[x] = new Media(`music/${x}.wav`, console.log, console.log, console.log)  
+    })
+
+    music.intro.play()
+
+    init()
+}
+
+
 var pad = 5
 var bushPos = [
     {x: 40, y: 10},
@@ -36,11 +59,19 @@ function addFSM() {
             stage.removeChild(logo)
             renderer.render(stage)
             startLoop()
+            music.intro.stop()
           },
-          onStart: startGame,
+          onStart: function() {
+            startGame()
+            music.sneak.play()
+          },
+          onDiscover: function() {
+            sfx.found.play()
+          },
           onGameover: function() {
             gameover_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/gameover_logo.png"))
             stage.addChild(gameover_logo)
+            music.sneak.stop()
           },
           onLeaveGameover: function() {
             stage.removeChild(gameover_logo)
@@ -49,6 +80,8 @@ function addFSM() {
           onFinish: function() {
             victory_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/victory_logo.png"))
             stage.addChild(victory_logo)
+            sfx.success.play()
+            music.sneak.stop()
           },
           onLeaveVictory: function() {
             stage.removeChild(victory_logo)
@@ -143,6 +176,7 @@ function gameloop() {
         if (fox.position.x === bush.position.x && fox.position.y === bush.position.y) {
             running = false
             cancelAnims()
+            sfx.bush.play()
         }
     }
     if (found) {
@@ -162,6 +196,7 @@ function gameloop() {
                 { texture: PIXI.Texture.fromImage("images/bear_angry.png"), time: 10 },
             ]))
             fsm.discover()
+            effects.found.play()
         }
     })
     renderer.render(stage)
@@ -227,6 +262,9 @@ function startGame() {
 function keyboard() {
 
     window.addEventListener("keydown", function(e) {
+
+    //effects.found.play()
+
         if (e.keyCode === 49 && fsm.can('start')) {
             fsm.start()
             console.log('state is', fsm.state)
@@ -252,6 +290,9 @@ function keyboard() {
     })
 
     window.addEventListener("touchstart", function(e) {
+
+        //foo.play()
+
         if (fsm.state === 'game') {
             cooldown === 0 && run()
         }
