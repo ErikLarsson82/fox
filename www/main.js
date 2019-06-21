@@ -8,15 +8,17 @@ var music = {}
 var sfxFiles = ['bush', 'found', 'snooze', 'success']
 var musicFiles = ['intro', 'sneak']
 
+//var fake = {play: () => {}, stop: () => {}}
+
 document.addEventListener("deviceready", onDeviceReady, false)
 
 function onDeviceReady() {
     sfxFiles.forEach(x => {
-      sfx[x] = new Media(`sfx/${x}.wav`, console.log, console.log, console.log)  
+      sfx[x] = new Media(`sfx/${x}.wav`)  
     })
 
     musicFiles.forEach(x => {
-      music[x] = new Media(`music/${x}.wav`, console.log, console.log, console.log)  
+      music[x] = new Media(`music/${x}.wav`)  
     })
 
     music.intro.play()
@@ -24,6 +26,8 @@ function onDeviceReady() {
     init()
 }
 
+var scoreCurrent = 0
+var scoreMax = 0
 
 var pad = 5
 var bushPos = [
@@ -67,9 +71,12 @@ function addFSM() {
           },
           onDiscover: function() {
             sfx.found.play()
+            scoreCurrent = 0
           },
           onGameover: function() {
             gameover_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/gameover_logo.png"))
+            gameover_logo.position.x = 30
+            gameover_logo.position.y = 60
             stage.addChild(gameover_logo)
             music.sneak.stop()
           },
@@ -79,9 +86,14 @@ function addFSM() {
           onLeaveGameover: removePixiChildren,
           onFinish: function() {
             victory_logo = new PIXI.Sprite(PIXI.Texture.fromImage("images/victory_logo.png"))
+            victory_logo.position.x = 30
+            victory_logo.position.y = 60
             stage.addChild(victory_logo)
             sfx.success.play()
             music.sneak.stop()
+            scoreCurrent++
+            if (scoreMax < scoreCurrent)
+                scoreMax = scoreCurrent
           },
           onLeaveVictory: function() {
             stage.removeChild(victory_logo)
@@ -143,6 +155,9 @@ function init() {
 function gameloop() {
     var found = fsm.state === 'found'
     var game = fsm.state === 'game'
+
+    scoreCurrentContainer.text = scoreCurrent
+    scoreMaxContainer.text = scoreMax
 
     animations.forEach(function(x) { x() })
 
@@ -257,13 +272,21 @@ function startGame() {
         bushContainer.addChild(bush)
         return bushContainer
     })
+    
+    scoreCurrentContainer = new PIXI.Text('test',{fontFamily : 'Arial', fontSize: 14, fill : 0xffffff, align : 'right'});
+    scoreCurrentContainer.x = 240
+    scoreCurrentContainer.y = 2
+    stage.addChild(scoreCurrentContainer)
+
+    scoreMaxContainer = new PIXI.Text('test23',{fontFamily : 'Arial', fontSize: 14, fill : 0xffffff, align : 'right'});
+    scoreMaxContainer.x = 240
+    scoreMaxContainer.y = 15
+    stage.addChild(scoreMaxContainer)
 }
 
 function keyboard() {
 
     window.addEventListener("keydown", function(e) {
-
-    //effects.found.play()
 
         if (e.keyCode === 49 && fsm.can('start')) {
             fsm.start()
@@ -291,8 +314,6 @@ function keyboard() {
 
     window.addEventListener("touchstart", function(e) {
 
-        //foo.play()
-
         if (fsm.state === 'game') {
             cooldown === 0 && run()
         }
@@ -300,15 +321,15 @@ function keyboard() {
     })
 
     window.addEventListener("touchend", function(e) {
-        console.log('end', e)
+        //console.log('end', e)
     })
 
     window.addEventListener("touchcancel", function(e) {
-        console.log('touchcancel', e)
+        //console.log('touchcancel', e)
     })
 
     window.addEventListener("touchmove", function(e) {
-        console.log('touchmove', e)
+        //console.log('touchmove', e)
     })
 
 }
